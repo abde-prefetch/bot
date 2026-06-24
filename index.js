@@ -30,6 +30,14 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
+  if (interaction.isButton()) {
+    const ticketCommand = client.commands.get('ticket');
+    if (ticketCommand && ticketCommand.handleButton) {
+      await ticketCommand.handleButton(interaction);
+    }
+    return;
+  }
+
   if (!interaction.isChatInputCommand()) return;
 
   const command = client.commands.get(interaction.commandName);
